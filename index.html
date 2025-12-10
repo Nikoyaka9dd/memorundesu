@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+<style>
+    /* 全体のスタイル */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Menlo", "Monaco", monospace; 
+      color: rgba(255, 255, 255, 0.95);
+      overflow: hidden;
+      height: 100vh;
+      box-sizing: border-box;
+      -webkit-app-region: drag; /*ドラッグしたい */
+    }
+
+    /* ストローク */
+    #container {
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.2); /* 細めが好き */
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.05); 
+      transition: border-color 0.3s;
+    }
+
+    /* 一応ホバーした時の処理 */
+    #container:hover {
+      border-color: rgba(255, 255, 255, 0.5); 
+    }
+
+    /* 文字入力エリア*/
+    .content-area, #date-display {
+      -webkit-app-region: no-drag;
+    }
+
+    #date-display {
+      text-align: right;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 12px 0;
+      opacity: 0.6;
+    }
+
+    .content-area {
+      flex: 1;
+      padding: 10px 15px;
+      outline: none;
+      font-size: 14px;
+      line-height: 1.6;
+      border: none;
+      background: transparent;
+      resize: none;
+      color: inherit;
+      overflow-y: auto;
+    }
+
+    #preview { display: none; }
+    #preview ul { padding-left: 20px; margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="date-display">--/--</div>
+    
+    <textarea id="editor" class="content-area" placeholder="To do..."></textarea>
+    
+    <div id="preview" class="content-area"></div>
+  </div>
+
+  <script>
+    const marked = require('marked'); // マークダウン使う
+
+    const dateDisplay = document.getElementById('date-display');
+    const editor = document.getElementById('editor');
+    const preview = document.getElementById('preview');
+
+    // 日付更新ロジック 
+    function updateDate() {
+      const now = new Date();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      dateDisplay.textContent = `${month}/${day}`;
+    }
+    updateDate();
+    setInterval(updateDate, 60000); // 1分ごとに更新
+
+    // ダブルクリックしたら編集とプレビューを切り替える処理
+    document.body.addEventListener('dblclick', () => {
+      const isEditing = editor.style.display !== 'none';
+      
+      if (isEditing) {
+        // プレビューモード
+        editor.style.display = 'none';
+        preview.style.display = 'block';
+        preview.innerHTML = marked.parse(editor.value);
+      } else {
+        // 編集モード
+        preview.style.display = 'none';
+        editor.style.display = 'block';
+        editor.focus();
+      }
+    });
+
+  </script>
+</body>
+</html>
