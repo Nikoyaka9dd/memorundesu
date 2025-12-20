@@ -15,6 +15,27 @@
       -webkit-app-region: drag; /*ドラッグしたい */
     }
 
+    /* 画像を背景に差し込む */
+    #container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      
+      /* 画像の指定 */
+      background-image: url('back.PNG'); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      
+      opacity: 0.15; /* うっすらさせる*/
+      
+      z-index: -1; 
+      pointer-events: none;
+    }
+
     /* ストローク */
     #container {
       height: 100%;
@@ -24,6 +45,9 @@
       flex-direction: column;
       background: rgba(0, 0, 0, 0.05); 
       transition: border-color 0.3s;
+
+      position: relative;
+      overflow: hidden;
     }
 
     /* 一応ホバーした時の処理 */
@@ -65,7 +89,7 @@
   <div id="container">
     <div id="date-display">--/--</div>
     
-    <textarea id="editor" class="content-area" placeholder="To do..."></textarea>
+    <textarea id="editor" class="content-area" placeholder="memorundesu_"></textarea>
     
     <div id="preview" class="content-area"></div>
   </div>
