@@ -11,7 +11,7 @@ function createWindow() {
     vibrancy: 'hud',       
     visualEffectState: 'active',
     hasShadow: false,
-    type: 'panel', //こうすると恒常的に表示できるらしい。へ〜
+    // type: 'panel', // 最前面に表示されてしまうのでやめた
     skipTaskbar: true, //ついでにDockに表示されないようにもしておく     
     webPreferences: {
       nodeIntegration: true,
@@ -21,6 +21,8 @@ function createWindow() {
 
   win.loadFile('index.html');
 
+  win.setAlwaysOnTop(false);
+  win.setLevel('desktop');
   //別のデスクトップに移動してもついてくるようにする
   win.setVisibleOnAllWorkspaces(true, {visibleOnFullScreen: false});
 
