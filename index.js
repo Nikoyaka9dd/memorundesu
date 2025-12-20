@@ -2,8 +2,8 @@ const { app, BrowserWindow } = require('electron');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 400,
-    height: 250,
+    width: 600,
+    height: 300,
     x: 1000,
     y: 50, // 画面右上に表示させたい。
     frame: false,        
@@ -11,7 +11,7 @@ function createWindow() {
     vibrancy: 'hud',       
     visualEffectState: 'active',
     hasShadow: false,
-    // type: 'panel', // 最前面に表示されてしまうのでやめた
+    type: 'panel',
     skipTaskbar: true, //ついでにDockに表示されないようにもしておく     
     webPreferences: {
       nodeIntegration: true,
@@ -21,10 +21,11 @@ function createWindow() {
 
   win.loadFile('index.html');
 
-  win.setAlwaysOnTop(false);
-  win.setLevel('desktop');
-  //別のデスクトップに移動してもついてくるようにする
-  win.setVisibleOnAllWorkspaces(true, {visibleOnFullScreen: false});
+  win.setAlwaysOnTop(false); 
+  win.setLevel('desktop'); 
+
+  // 全てのワークスペースで表示
+  win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: false });
 
   //フルスクリーン禁止
   win.setFullScreenable(false);
