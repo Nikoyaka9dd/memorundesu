@@ -9,6 +9,7 @@
 ## Install
 
 以下からdmgファイルをダウンロードしてインストールしてください。
+※現在はダウンロードできません
 
 https://github.com/Nikoyaka9dd/memorundesu/releases/tag/v1.0.0
 
